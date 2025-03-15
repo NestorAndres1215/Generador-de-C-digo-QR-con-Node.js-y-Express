@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Código QR</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        /* Estilos del formulario */
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        input {
+            padding: 10px;
+            width: 250px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            transition: transform 0.3s;
+        }
+
+        input:focus {
+            transform: scale(1.05);
+            outline: none;
+        }
+
+        button {
+            background: #ff6f61;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: #e85c50;
+            transform: scale(1.05);
+        }
+
+        /* Estilos del código QR */
+        .qr-container {
+            margin-top: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        img {
+            width: 200px;
+            height: 200px;
+        }
+
+        .download-btn {
+            margin-top: 10px;
+            background: #28a745;
+            padding: 8px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            font-size: 1rem;
+            text-decoration: none;
+            color: white;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .download-btn:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        /* Mensaje de error */
+        .error-message {
+            color: #ff4d4d;
+            font-weight: bold;
+            background: rgba(255, 77, 77, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Generador de Código QR</h1>
+
+    <% if (error) { %>
+        <p class="error-message"><%= error %></p>
+    <% } %>
+
+    <form action="/generate" method="POST">
+        <input type="text" name="text" placeholder="Ingrese texto o URL" required>
+        <button type="submit">Generar QR</button>
+    </form>
+
+    <% if (qrCodeDataUrl) { %>
+        <div class="qr-container">
+            <h2>Tu Código QR</h2>
+            <img src="<%= qrCodeDataUrl %>" alt="Código QR">
+            <br>
+            <a href="<%= qrCodeDataUrl %>" download="qrcode.png" class="download-btn">
+                Descargar QR
+            </a>
+        </div>
+    <% } %>
+</body>
+</html>
